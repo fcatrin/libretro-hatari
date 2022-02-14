@@ -478,7 +478,15 @@ void update_input(void)
    else if ( mbt[i]==1 && ! input_state_cb(0, RETRO_DEVICE_JOYPAD, 0, i) )
    {
       mbt[i]=0;
+/*
       pauseg=1;
+*/
+
+/*
+      if (!bInFullScreen) Screen_EnterFullScreen();
+      else Screen_ReturnFromFullScreen();
+      Screen_SetFullUpdate();
+*/
    }
 
    i=RETRO_DEVICE_ID_JOYPAD_X;//show vkey toggle
