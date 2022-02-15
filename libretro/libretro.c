@@ -203,7 +203,18 @@ void retro_set_environment(retro_environment_t cb)
          },
          "0"
       },
-	  
+      {
+         "hatari_fullscreen",
+         "Full screen",
+         "Remove Atari ST big borders",
+         {
+           { "true", "enabled" },
+           { "false", "disabled" },
+           { NULL, NULL },
+         },
+         "true"
+      },
+
       { NULL, NULL, NULL, {{0}}, NULL },
 	};
 
@@ -330,6 +341,14 @@ static void update_variables(void)
    if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
    {
       strncpy((char*)hatari_frameskips, var.value, 2);
+   }
+
+   var.key = "hatari_fullscreen";
+   var.value = NULL;
+
+   if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+   {
+      hatari_borders = (strcmp(var.value, "true") != 0);
    }
 
    if (new_video_config != video_config)
