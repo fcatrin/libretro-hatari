@@ -214,6 +214,21 @@ void retro_set_environment(retro_environment_t cb)
          },
          "true"
       },
+      {
+         "hatari_memory_size",
+         "Memory Size",
+         "Needs restart",
+         {
+            { "0", "512KB" },
+            { "1",   "1MB" },
+            { "2",   "2MB" },
+            { "4",   "4MB" },
+            { "8",   "8MB" },
+            { "14", "14MB" },
+            { NULL, NULL },
+         },
+         "0"
+      },
 
       { NULL, NULL, NULL, {{0}}, NULL },
 	};
@@ -349,6 +364,14 @@ static void update_variables(void)
    if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
    {
       hatari_borders = (strcmp(var.value, "true") != 0);
+   }
+
+   var.key = "hatari_memory_size";
+   var.value = NULL;
+
+   if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+   {
+       ConfigureParams.Memory.nMemorySize = atoi(var.value);
    }
 
    if (new_video_config != video_config)
