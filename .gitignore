@@ -3,3 +3,5 @@
 *.dll
 *.bc
 *.a
+.idea
+objs
