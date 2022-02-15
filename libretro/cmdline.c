@@ -17,6 +17,7 @@ extern bool hatari_twojoy;
 extern bool hatari_fastfdc;
 extern bool hatari_borders;
 extern char hatari_frameskips[2];
+extern char hatari_memsize[2];
 
 void Add_Option(const char* option)
 {
@@ -57,6 +58,8 @@ int pre_main(const char *argv)
       Add_Option(hatari_fastfdc==true?"1":"0");
       Add_Option("--borders");
       Add_Option(hatari_borders==true?"1":"0");
+      Add_Option("--memsize");
+      Add_Option(hatari_memsize);
       Add_Option("--frameskips");
       Add_Option(hatari_frameskips);
       Add_Option("--disk-a");

@@ -67,6 +67,7 @@ bool hatari_nokeys = false;
 bool hatari_fastfdc = true;
 bool hatari_borders = true;
 char hatari_frameskips[2];
+char hatari_memsize[2];
 char savestate_fname[RETRO_PATH_MAX];
 
 static struct retro_input_descriptor input_descriptors[] = {
@@ -371,7 +372,7 @@ static void update_variables(void)
 
    if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
    {
-       ConfigureParams.Memory.nMemorySize = atoi(var.value);
+       strncpy(hatari_memsize, var.value, 2);
    }
 
    if (new_video_config != video_config)
