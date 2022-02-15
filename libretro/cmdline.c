@@ -22,6 +22,8 @@ extern char hatari_machine[7];
 extern char hatari_cpu[2];
 extern char hatari_cpu_clock[3];
 
+extern retro_log_printf_t log_cb;
+
 void Add_Option(const char* option)
 {
    printf("Option : %s\n", option);
@@ -84,6 +86,7 @@ int pre_main(const char *argv)
    {
       xargv_cmd[i] = (char*)(XARGV[i]);
       printf("%2d  %s\n",i,XARGV[i]);
+      log_cb(RETRO_LOG_INFO, "cmdline %s\n", XARGV[i]);
    }
 
    hmain(PARAMCOUNT,( char **)xargv_cmd); 
