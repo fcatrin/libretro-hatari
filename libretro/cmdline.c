@@ -16,6 +16,7 @@ void parse_cmdline( const char *argv );
 extern bool hatari_twojoy;
 extern bool hatari_fastfdc;
 extern bool hatari_borders;
+extern bool hatari_fast_boot;
 extern char hatari_frameskips[2];
 extern char hatari_memsize[2];
 extern char hatari_machine[7];
@@ -71,6 +72,8 @@ int pre_main(const char *argv)
       Add_Option(hatari_cpu);
       Add_Option("--cpuclock");
       Add_Option(hatari_cpu_clock);
+      Add_Option("--fast-boot");
+      Add_Option(hatari_fast_boot ? "1" : "0");
       Add_Option("--frameskips");
       Add_Option(hatari_frameskips);
       Add_Option("--disk-a");

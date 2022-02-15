@@ -66,6 +66,7 @@ bool hatari_nomouse = false;
 bool hatari_nokeys = false;
 bool hatari_fastfdc = true;
 bool hatari_borders = true;
+bool hatari_fast_boot = true;
 char hatari_frameskips[2];
 char hatari_memsize[2];
 char savestate_fname[RETRO_PATH_MAX];
@@ -287,6 +288,17 @@ void retro_set_environment(retro_environment_t cb)
          },
          "8"
       },
+      {
+         "hatari_fast_boot",
+         "Fast boot",
+         "Patch TOS so that the system boots faster",
+         {
+           { "true", "enabled" },
+           { "false", "disabled" },
+           { NULL, NULL },
+         },
+         "true"
+      },
 
       { NULL, NULL, NULL, {{0}}, NULL },
 	};
@@ -462,6 +474,14 @@ static void update_variables(void)
    if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
    {
        strcpy(hatari_cpu_clock, var.value);
+   }
+
+   var.key = "hatari_fast_boot";
+   var.value = NULL;
+
+   if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+   {
+      hatari_fast_boot = (strcmp(var.value, "true") == 0);
    }
 
    if (new_video_config != video_config)
