@@ -71,6 +71,7 @@ char hatari_memsize[2];
 char savestate_fname[RETRO_PATH_MAX];
 char tos_version[4];
 char hatari_machine[7];
+char hatari_cpu[2];
 
 static struct retro_input_descriptor input_descriptors[] = {
    { 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP, "Up" },
@@ -256,6 +257,21 @@ void retro_set_environment(retro_environment_t cb)
             { "falcon", "Falcon" },
             { NULL, NULL },
          },
+         "st"
+      },
+      {
+         "hatari_cpu",
+         "CPU Type",
+         "Needs restart",
+         {
+            { "0", "68000" },
+            { "1", "68010" },
+            { "2", "68020" },
+            { "3", "68030" },
+            { "4", "68040" },
+            { "5", "68060" },
+            { NULL, NULL },
+         },
          "103"
       },
 
@@ -419,6 +435,13 @@ static void update_variables(void)
        strcpy(hatari_machine, var.value);
    }
 
+   var.key = "hatari_cpu";
+   var.value = NULL;
+
+   if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+   {
+       strcpy(hatari_cpu, var.value);
+   }
 
    if (new_video_config != video_config)
    {

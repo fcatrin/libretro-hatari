@@ -19,6 +19,7 @@ extern bool hatari_borders;
 extern char hatari_frameskips[2];
 extern char hatari_memsize[2];
 extern char hatari_machine[7];
+extern char hatari_cpu[2];
 
 void Add_Option(const char* option)
 {
@@ -63,6 +64,8 @@ int pre_main(const char *argv)
       Add_Option(hatari_memsize);
       Add_Option("--machine");
       Add_Option(hatari_machine);
+      Add_Option("--cpulevel");
+      Add_Option(hatari_cpu);
       Add_Option("--frameskips");
       Add_Option(hatari_frameskips);
       Add_Option("--disk-a");
