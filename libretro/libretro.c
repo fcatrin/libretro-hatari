@@ -69,6 +69,7 @@ bool hatari_borders = true;
 char hatari_frameskips[2];
 char hatari_memsize[2];
 char savestate_fname[RETRO_PATH_MAX];
+char tos_version[4];
 
 static struct retro_input_descriptor input_descriptors[] = {
    { 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP, "Up" },
@@ -230,6 +231,19 @@ void retro_set_environment(retro_environment_t cb)
          },
          "0"
       },
+      {
+         "hatari_tos_version",
+         "TOS version",
+         "Needs restart",
+         {
+            { "104", "TOS 1.04" },
+            { "206", "TOS 2.06" },
+            { "306", "TOS 3.06 (TT)" },
+            { "404", "TOS 4.04 (Falcon)" },
+            { NULL, NULL },
+         },
+         "103"
+      },
 
       { NULL, NULL, NULL, {{0}}, NULL },
 	};
@@ -374,6 +388,15 @@ static void update_variables(void)
    {
        strncpy(hatari_memsize, var.value, 2);
    }
+
+   var.key = "hatari_tos_version";
+   var.value = NULL;
+
+   if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+   {
+       strcpy(tos_version, var.value);
+   }
+
 
    if (new_video_config != video_config)
    {
@@ -799,9 +822,12 @@ void retro_run(void)
 
 bool retro_load_game(const struct retro_game_info *info)
 {
+   char tos_name[20];
+   sprintf(tos_name, "tos-%s.img", tos_version);
+
    // Init
    environ_cb(RETRO_ENVIRONMENT_SET_INPUT_DESCRIPTORS, input_descriptors);
-   path_join(RETRO_TOS, RETRO_DIR, "tos.img");
+   path_join(RETRO_TOS, RETRO_DIR, tos_name);
    
    // Verify if tos.img is present
    if(!file_exists(RETRO_TOS))
