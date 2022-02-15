@@ -70,6 +70,7 @@ char hatari_frameskips[2];
 char hatari_memsize[2];
 char savestate_fname[RETRO_PATH_MAX];
 char tos_version[4];
+char hatari_machine[7];
 
 static struct retro_input_descriptor input_descriptors[] = {
    { 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP, "Up" },
@@ -244,6 +245,19 @@ void retro_set_environment(retro_environment_t cb)
          },
          "103"
       },
+      {
+         "hatari_machine",
+         "Machine type",
+         "Needs restart",
+         {
+            { "st",     "ST" },
+            { "ste",    "STE" },
+            { "tt",     "TT" },
+            { "falcon", "Falcon" },
+            { NULL, NULL },
+         },
+         "103"
+      },
 
       { NULL, NULL, NULL, {{0}}, NULL },
 	};
@@ -395,6 +409,14 @@ static void update_variables(void)
    if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
    {
        strcpy(tos_version, var.value);
+   }
+
+   var.key = "hatari_machine";
+   var.value = NULL;
+
+   if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+   {
+       strcpy(hatari_machine, var.value);
    }
 
 
