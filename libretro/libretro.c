@@ -72,6 +72,7 @@ char savestate_fname[RETRO_PATH_MAX];
 char tos_version[4];
 char hatari_machine[7];
 char hatari_cpu[2];
+char hatari_cpu_clock[3];
 
 static struct retro_input_descriptor input_descriptors[] = {
    { 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP, "Up" },
@@ -244,7 +245,7 @@ void retro_set_environment(retro_environment_t cb)
             { "404", "TOS 4.04 (Falcon)" },
             { NULL, NULL },
          },
-         "103"
+         "104"
       },
       {
          "hatari_machine",
@@ -272,7 +273,19 @@ void retro_set_environment(retro_environment_t cb)
             { "5", "68060" },
             { NULL, NULL },
          },
-         "103"
+         "0"
+      },
+      {
+         "hatari_cpu_clock",
+         "CPU Clock",
+         "Needs restart",
+         {
+            { "8",  "8Mhz" },
+            { "16", "16Mhz" },
+            { "32", "32Mhz" },
+            { NULL, NULL },
+         },
+         "8"
       },
 
       { NULL, NULL, NULL, {{0}}, NULL },
@@ -441,6 +454,14 @@ static void update_variables(void)
    if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
    {
        strcpy(hatari_cpu, var.value);
+   }
+
+   var.key = "hatari_cpu_clock";
+   var.value = NULL;
+
+   if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+   {
+       strcpy(hatari_cpu_clock, var.value);
    }
 
    if (new_video_config != video_config)
